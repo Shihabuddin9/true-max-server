@@ -18,7 +18,20 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
+        // Best Deals in Database
         const BestDealsCollection = client.db("BestDeals").collection('BestDealsCar');
+        // Brands Icon in Database
+        const BrandsCollection = client.db("Brands").collection('BrandsIcon');
+
+
+        // Show Brands Icon
+        app.get('/viewBrands', async (req, res) => {
+            const query = {};
+            const cursor = BrandsCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
 
         // Show Best Deals Car
         app.get('/viewCar', async (req, res) => {
