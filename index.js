@@ -54,6 +54,20 @@ async function run() {
             const viewCar = await BestDealsCollection.findOne(query);
             res.send(viewCar);
         })
+        // new Best Deals car add 
+        app.post('/viewCar', async (req, res) => {
+            const newBestDeals = req.body
+            const result = await BestDealsCollection.insertOne(newBestDeals);
+            res.send(result);
+        })
+        // Best Deals Car Delete
+        app.delete('/viewCar/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: ObjectId(id) }
+            const result = await BestDealsCollection.deleteOne(query);
+            res.send(result)
+        })
+
 
         //Show Trusted Dealers Icon in Home page
         app.get('/trustedDealers', async (req, res) => {
