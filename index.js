@@ -67,6 +67,32 @@ async function run() {
             const result = await BestDealsCollection.deleteOne(query);
             res.send(result)
         })
+        // data get for update
+        app.put('/viewCar/:id', async (req, res) => {
+            const id = req.params.id
+            const updateUser = req.body
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    name: updateUser.name,
+                    offer: updateUser.offer,
+                    use: updateUser.use,
+                    listed: updateUser.listed,
+                    wd: updateUser.wd,
+                    mi: updateUser.mi,
+                    engine: updateUser.engine,
+                    drive: updateUser.drive,
+                    mileage: updateUser.mileage,
+                    transmission: updateUser.transmission,
+                    country: updateUser.country,
+                    price: updateUser.price,
+                    img: updateUser.img
+                }
+            }
+            const result = await BestDealsCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+        })
 
 
         //Show Trusted Dealers Icon in Home page
