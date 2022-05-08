@@ -3,11 +3,31 @@ const app = express()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const cors = require('cors')
+// var jwt = require('jsonwebtoken');
 const port = process.env.PORT || 5000;
 
 // middleWare
 app.use(cors())
 app.use(express.json())
+
+// function verifyJwt(req, res, next) {
+//     const authHeaders = req.headers.authorization
+//     if (!authHeaders) {
+//         return res.status(401).send({ message: 'unauthorized access' })
+//     }
+//     const token = authHeaders.split(' ')[1];
+//     jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
+//         if (err) {
+//             return res.status(403).send({ message: 'Forbidden access' })
+//         }
+//         console.log('decoded', decoded)
+//         req.decoded = decoded
+//         next();
+//     })
+
+
+// }
+
 
 
 
@@ -128,7 +148,7 @@ async function run() {
             res.send(result)
         })
 
-        //user add items get and user items collection
+        // user add items get and user items collection
         app.get('/myitems', async (req, res) => {
             const email = req.query.email
             const query = { email: email };
@@ -136,6 +156,15 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result)
         })
+
+        // // access token
+        // app.post('/login', async (req, res) => {
+        //     const user = req.query
+        //     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN, {
+        //         expiresIn: '1d'
+        //     })
+        //     res.send({ accessToken })
+        // })
 
 
 
