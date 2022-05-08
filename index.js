@@ -28,6 +28,8 @@ async function run() {
         const BodyTypeCarCollection = client.db("BodyType").collection('BodyTypeCar');
         //get Latest car in database
         const LatestCarCollection = client.db("Latest").collection('LatestCar');
+        // ontact
+        const contactCollection = client.db("contact").collection('user');
 
 
 
@@ -116,6 +118,13 @@ async function run() {
             const query = {};
             const cursor = LatestCarCollection.find(query);
             const result = await cursor.toArray();
+            res.send(result)
+        })
+
+        // contact
+        app.post('/contact', async (req, res) => {
+            const newContact = req.body
+            const result = await contactCollection.insertOne(newContact);
             res.send(result)
         })
 
