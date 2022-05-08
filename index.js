@@ -128,6 +128,15 @@ async function run() {
             res.send(result)
         })
 
+        //user add items get and user items collection
+        app.get('/myitems', async (req, res) => {
+            const email = req.query.email
+            const query = { email: email };
+            const cursor = BestDealsCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
 
 
     }
